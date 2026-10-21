@@ -1,0 +1,30 @@
+<header class="barra">
+  <a routerLink="/" class="logo">
+    <span class="logo-monolito"></span>
+    <span>Diciembre <strong>2001</strong></span>
+  </a>
+
+  <button class="hamburguesa" (click)="alternarMenu()" [attr.aria-expanded]="menuAbierto()" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav [class.abierto]="menuAbierto()">
+    @for (enlace of enlaces; track enlace.ruta) {
+      <a
+        [routerLink]="enlace.ruta"
+        routerLinkActive="activo"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="menuAbierto.set(false)"
+        >{{ enlace.texto }}</a
+      >
+    }
+  </nav>
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="pie">
+  <p>Actividad del Segundo Parcial · Programación de Aplicaciones Web · Angular &amp; Firebase Hosting</p>
+</footer>

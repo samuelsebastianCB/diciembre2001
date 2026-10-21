@@ -1,0 +1,88 @@
+<section class="contenedor">
+  <span class="etiqueta">Página 2 · Datos importantes</span>
+  <h1 class="titulo-pagina">Diciembre de 2001</h1>
+  <p class="subtitulo">
+    Los acontecimientos más representativos del mes y el año en que nací: un mundo que cambiaba tras el 11-S,
+    una crisis económica en Latinoamérica y el inicio de una nueva era tecnológica.
+  </p>
+
+  <!-- ===== VIDEO ===== -->
+  <div class="tarjeta video aparecer">
+    <div class="video-cabecera">
+      <h2>🎬 Video representativo (2001: Una Odisea Espacial)</h2>
+      <div class="pestanas">
+        <button [class.activa]="fuente() === 'youtube'" (click)="fuente.set('youtube')">YouTube: 2001 Odisea del espacio</button>
+        <button [class.activa]="fuente() === 'hosting'" (click)="fuente.set('hosting')">MP4 en Firebase Hosting (NASA 2001 Odyssey)</button>
+      </div>
+    </div>
+
+    <div class="marco">
+      @if (fuente() === 'youtube') {
+        <iframe
+          [src]="urlYoutube"
+          title="Tráiler de 2001: Odisea del espacio"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      } @else if (videoLocalDisponible()) {
+        <video controls preload="metadata" [src]="videoLocal" (error)="videoLocalDisponible.set(false)">
+          Tu navegador no soporta video HTML5.
+        </video>
+      } @else {
+        <div class="sin-video">
+          <p>📼 Aún no hay video local.</p>
+          <p>
+            Coloca tu archivo en <code>public/video/diciembre2001.mp4</code> y vuelve a desplegar: se servirá
+            directamente desde Firebase Hosting.
+          </p>
+        </div>
+      }
+    </div>
+    <p class="nota">
+      @if (fuente() === 'youtube') {
+        Tráiler oficial de <em>2001: A Space Odyssey</em> (Stanley Kubrick, 1968), el año 2001 visto desde el cine (embebido con <code>DomSanitizer</code>).
+      } @else {
+        Video MP4 de la misión <em>2001 Mars Odyssey</em> (NASA, 2001 — bautizada en honor a la obra de Kubrick) alojado directamente en Firebase Hosting (<code>/video/diciembre2001.mp4</code>) y reproducido en tiempo real.
+      }
+    </p>
+  </div>
+
+  <!-- ===== LÍNEA DE TIEMPO ===== -->
+  <h2 class="seccion">📅 Línea de tiempo de diciembre 2001</h2>
+
+  <div class="filtros">
+    @for (c of categorias; track c) {
+      <button [class.activo]="filtro() === c" (click)="filtro.set(c)">{{ c }}</button>
+    }
+  </div>
+
+  <ol class="linea-tiempo">
+    @for (e of eventos(); track e.titulo; let i = $index) {
+      <li class="evento" [class.destacado]="e.destacado" [style.animation-delay.ms]="i * 80">
+        <div class="dia">
+          <strong>{{ e.dia }}</strong>
+          <span>DIC</span>
+        </div>
+        <div class="tarjeta contenido">
+          <span class="cat" [attr.data-cat]="e.categoria">{{ e.categoria }}</span>
+          <h3>{{ e.titulo }}</h3>
+          <p>{{ e.descripcion }}</p>
+        </div>
+      </li>
+    } @empty {
+      <li>No hay eventos en esta categoría.</li>
+    }
+  </ol>
+
+  <!-- ===== AÑO 2001 ===== -->
+  <h2 class="seccion">🌐 Otros hitos del año 2001</h2>
+  <div class="hitos">
+    @for (h of hitos; track h.texto) {
+      <div class="tarjeta hito">
+        <span>{{ h.mes }}</span>
+        <p>{{ h.texto }}</p>
+      </div>
+    }
+  </div>
+</section>

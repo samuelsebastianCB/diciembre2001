@@ -1,0 +1,66 @@
+<section class="hero">
+  <!-- Fondo de estrellas animadas -->
+  <div class="cielo" aria-hidden="true">
+    @for (e of estrellas; track $index) {
+      <span
+        class="estrella"
+        [style.left.%]="e.x"
+        [style.top.%]="e.y"
+        [style.width.px]="e.tam"
+        [style.height.px]="e.tam"
+        [style.animation-delay.s]="e.retraso"
+      ></span>
+    }
+  </div>
+
+  <!-- Planeta y monolito -->
+  <div class="planeta" aria-hidden="true"></div>
+  <div class="monolito" aria-hidden="true"></div>
+
+  <div class="hero-contenido">
+    <span class="etiqueta aparecer">Bienvenido al proyecto</span>
+    <h1 class="titulo aparecer">
+      <span class="linea">6 de diciembre</span>
+      <span class="anio">2001</span>
+    </h1>
+    <p class="lema aparecer">Una odisea por el mes y el año en que nací</p>
+
+    <div class="acciones aparecer">
+      <a routerLink="/datos" class="boton">Explorar diciembre 2001 →</a>
+      <a routerLink="/documentacion" class="boton secundario">Ver documentación</a>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor">
+  <!-- Contador en tiempo real -->
+  <div class="contador tarjeta aparecer">
+    <h2>Tiempo transcurrido desde aquel jueves</h2>
+    <div class="cifras">
+      <div><strong>{{ transcurrido().dias.toLocaleString('es-MX') }}</strong><span>días</span></div>
+      <div><strong>{{ transcurrido().horas.toLocaleString('es-MX') }}</strong><span>horas</span></div>
+      <div><strong>{{ transcurrido().minutos.toLocaleString('es-MX') }}</strong><span>minutos</span></div>
+      <div><strong>{{ transcurrido().segundos.toLocaleString('es-MX') }}</strong><span>segundos</span></div>
+    </div>
+  </div>
+
+  <!-- Tarjetas interactivas -->
+  <h2 class="seccion-titulo">Haz clic para descubrir</h2>
+  <div class="rejilla">
+    @for (t of tarjetas(); track t.frente; let i = $index) {
+      <button class="volteable" [class.volteada]="t.volteada" (click)="voltear(i)">
+        <div class="cara frente">{{ t.frente }}</div>
+        <div class="cara reverso">{{ t.reverso }}</div>
+      </button>
+    }
+  </div>
+
+  <!-- Accesos a las 4 páginas -->
+  <h2 class="seccion-titulo">Contenido del sitio</h2>
+  <div class="paginas">
+    <a routerLink="/" class="tarjeta pagina"><span>01</span><h3>Inicio</h3><p>Bienvenida animada e interactiva.</p></a>
+    <a routerLink="/datos" class="tarjeta pagina"><span>02</span><h3>Datos importantes</h3><p>Acontecimientos de diciembre de 2001 y video.</p></a>
+    <a routerLink="/documentacion" class="tarjeta pagina"><span>03</span><h3>Documentación</h3><p>Diagramas de secuencia y estructura del código.</p></a>
+    <a routerLink="/seguridad" class="tarjeta pagina"><span>04</span><h3>Seguridad</h3><p>Cómo se protege la app en Angular y Firebase.</p></a>
+  </div>
+</section>

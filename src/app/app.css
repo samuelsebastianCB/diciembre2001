@@ -1,0 +1,110 @@
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1rem, 4vw, 3rem);
+  background: rgba(5, 8, 20, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.logo strong {
+  color: var(--acento);
+}
+
+.logo-monolito {
+  width: 10px;
+  height: 26px;
+  background: linear-gradient(180deg, #222, #000);
+  border: 1px solid #444;
+  box-shadow: 0 0 12px rgba(255, 180, 60, 0.5);
+}
+
+nav {
+  display: flex;
+  gap: 0.3rem;
+}
+
+nav a {
+  color: var(--texto-suave);
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  transition: background 0.25s, color 0.25s;
+}
+
+nav a:hover {
+  color: var(--texto);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+nav a.activo {
+  color: #111;
+  background: var(--acento);
+  font-weight: 600;
+}
+
+.hamburguesa {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.hamburguesa span {
+  width: 24px;
+  height: 2px;
+  background: var(--texto);
+}
+
+main {
+  min-height: calc(100vh - 140px);
+}
+
+.pie {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  border-top: 1px solid var(--borde);
+}
+
+@media (max-width: 760px) {
+  .hamburguesa {
+    display: flex;
+  }
+
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 1rem;
+    background: rgba(5, 8, 20, 0.97);
+    border-bottom: 1px solid var(--borde);
+    display: none;
+  }
+
+  nav.abierto {
+    display: flex;
+  }
+}

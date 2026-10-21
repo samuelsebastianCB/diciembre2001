@@ -1,0 +1,138 @@
+/* Estilos globales: tema "espacial" inspirado en 2001: Odisea del espacio */
+:root {
+  --fondo: #050814;
+  --tarjeta: rgba(18, 24, 48, 0.7);
+  --borde: rgba(120, 140, 200, 0.18);
+  --texto: #e8ecf8;
+  --texto-suave: #9aa4c4;
+  --acento: #ffb43c;
+  --acento-2: #4fc3f7;
+  --peligro: #ff5c7a;
+  --ok: #4ade80;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #fff8, transparent),
+    radial-gradient(1px 1px at 70% 80%, #fff6, transparent),
+    radial-gradient(1px 1px at 40% 60%, #fff5, transparent),
+    radial-gradient(ellipse at top, #0d1433 0%, var(--fondo) 60%);
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+a {
+  color: var(--acento-2);
+}
+
+code,
+pre {
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+/* Utilidades compartidas por las páginas */
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+.tarjeta {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+.etiqueta {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acento);
+  border: 1px solid rgba(255, 180, 60, 0.4);
+  background: rgba(255, 180, 60, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.titulo-pagina {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin: 0.6rem 0 0.4rem;
+}
+
+.subtitulo {
+  color: var(--texto-suave);
+  max-width: 70ch;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid var(--acento);
+  background: var(--acento);
+  color: #111;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-size: 0.95rem;
+}
+
+.boton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 180, 60, 0.35);
+}
+
+.boton.secundario {
+  background: transparent;
+  color: var(--acento);
+}
+
+/* Animación de entrada reutilizable */
+.aparecer {
+  animation: aparecer 0.7s ease both;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

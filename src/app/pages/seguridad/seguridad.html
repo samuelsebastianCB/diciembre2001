@@ -1,0 +1,95 @@
+<section class="contenedor">
+  <span class="etiqueta">Página 4 · Seguridad del sistema</span>
+  <h1 class="titulo-pagina">¿Cómo se protege esta aplicación?</h1>
+  <p class="subtitulo">
+    La seguridad se aplica en tres capas: al <strong>compilar</strong> con Angular, mientras la app
+    <strong>se ejecuta</strong> en el navegador y en el <strong>servidor</strong> de Firebase Hosting.
+  </p>
+
+  <!-- ===== Estado de conexión ===== -->
+  <div class="tarjeta conexion" [class.segura]="protocolo === 'https:'">
+    <span class="candado">{{ protocolo === 'https:' ? '🔒' : '🔓' }}</span>
+    <div>
+      <strong>Conexión actual: {{ protocolo === 'https:' ? 'HTTPS cifrada (TLS)' : 'HTTP sin cifrar (entorno local)' }}</strong>
+      <p>
+        @if (protocolo === 'https:') {
+          El certificado SSL/TLS lo emite y renueva automáticamente Firebase Hosting.
+        } @else {
+          Estás en desarrollo local. Al desplegar en Firebase, la conexión será HTTPS automáticamente.
+        }
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== Capas (acordeón) ===== -->
+  <h2 class="seccion">🧱 Capas de seguridad</h2>
+  <div class="capas">
+    @for (capa of capas; track capa.titulo; let i = $index) {
+      <div class="tarjeta capa" [class.abierta]="abierta() === i">
+        <button class="capa-cabecera" (click)="abierta.set(abierta() === i ? -1 : i)" [attr.aria-expanded]="abierta() === i">
+          <span>{{ capa.icono }} {{ capa.titulo }}</span>
+          <span class="flecha">▾</span>
+        </button>
+        @if (abierta() === i) {
+          <ul class="aparecer">
+            @for (p of capa.puntos; track p.nombre) {
+              <li><strong>{{ p.nombre }}:</strong> {{ p.detalle }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- ===== Demostración XSS ===== -->
+  <h2 class="seccion">🧪 Demostración interactiva: sanitización contra XSS</h2>
+  <div class="tarjeta">
+    <p class="ayuda">Elige un ataque o escribe tu propio HTML. Angular lo limpiará antes de insertarlo en la página.</p>
+    <div class="ataques">
+      @for (a of ataques; track a; let i = $index) {
+        <button (click)="entrada.set(a)">Ejemplo {{ i + 1 }}</button>
+      }
+    </div>
+    <textarea [value]="entrada()" (input)="actualizar($event)" rows="3" spellcheck="false"></textarea>
+
+    <div class="comparacion">
+      <div>
+        <h4>Interpolación <code ngNonBindable>&#123;&#123; texto &#125;&#125;</code></h4>
+        <div class="salida">{{ entrada() }}</div>
+        <small>Se muestra como texto plano: nada se ejecuta.</small>
+      </div>
+      <div>
+        <h4>Enlace <code>[innerHTML]</code></h4>
+        <div class="salida" [innerHTML]="entrada()"></div>
+        <small>Se interpreta el HTML, pero sin <code>&lt;script&gt;</code>, <code>onerror</code> ni <code>javascript:</code>.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Cabeceras ===== -->
+  <h2 class="seccion">📡 Cabeceras HTTP de seguridad (Firebase Hosting)</h2>
+  <div class="tarjeta">
+    <p class="ayuda">
+      Estas cabeceras se definen en <code>firebase.json</code>. Pulsa el botón para consultarlas en vivo desde el servidor.
+    </p>
+    <button class="boton" (click)="revisarCabeceras()" [disabled]="revisando()">
+      {{ revisando() ? 'Consultando…' : 'Revisar cabeceras' }}
+    </button>
+
+    @if (cabeceras().length) {
+      <table>
+        <thead>
+          <tr><th>Cabecera</th><th>Valor recibido</th></tr>
+        </thead>
+        <tbody>
+          @for (c of cabeceras(); track c.nombre) {
+            <tr>
+              <td><span [class]="c.valor ? 'ok' : 'falta'">{{ c.valor ? '✔' : '✖' }}</span> {{ c.nombre }}</td>
+              <td><code>{{ c.valor ?? 'No presente (en local es normal; aparece al desplegar)' }}</code></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</section>

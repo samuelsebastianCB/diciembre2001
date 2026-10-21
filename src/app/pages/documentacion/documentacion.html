@@ -1,0 +1,56 @@
+<section class="contenedor">
+  <span class="etiqueta">Página 3 · Documentación técnica</span>
+  <h1 class="titulo-pagina">Cómo se construyó este proyecto</h1>
+  <p class="subtitulo">
+    Aplicación de una sola página (SPA) en <strong>Angular</strong> con componentes standalone, signals y rutas con
+    carga diferida, compilada con <code>ng build</code> y desplegada en <strong>Firebase Hosting</strong>.
+  </p>
+
+  <!-- ===== Resumen ===== -->
+  <div class="resumen">
+    <div class="tarjeta"><h3>⚙️ Framework</h3><p>Angular (standalone components, signals, control flow &#64;if / &#64;for).</p></div>
+    <div class="tarjeta"><h3>🧭 Navegación</h3><p>Angular Router con <code>loadComponent</code> (lazy loading) por página.</p></div>
+    <div class="tarjeta"><h3>🗄️ Base de datos</h3><p>No se usa BD: los datos viven en <code>src/app/data/eventos.ts</code> y se compilan en el bundle.</p></div>
+    <div class="tarjeta"><h3>☁️ Hosting</h3><p>Firebase Hosting sirve <code>dist/diciembre2001/browser</code> por HTTPS y CDN global.</p></div>
+  </div>
+
+  <!-- ===== Pasos ===== -->
+  <h2 class="seccion">🛠️ Pasos para generar el proyecto</h2>
+  <ol class="pasos">
+    @for (p of pasos; track p.cmd; let i = $index) {
+      <li class="tarjeta">
+        <span class="num">{{ i + 1 }}</span>
+        <div>
+          <code>{{ p.cmd }}</code>
+          <p>{{ p.desc }}</p>
+        </div>
+      </li>
+    }
+  </ol>
+
+  <!-- ===== Estructura ===== -->
+  <h2 class="seccion">📁 Estructura del código</h2>
+  <pre class="tarjeta arbol">{{ arbol }}</pre>
+
+  <!-- ===== Diagramas ===== -->
+  <h2 class="seccion">🔁 Diagramas de secuencia por página</h2>
+  @if (cargando()) {
+    <p class="estado">Generando diagramas…</p>
+  }
+  @if (error()) {
+    <p class="estado error">No se pudieron generar los diagramas.</p>
+  }
+
+  @for (d of diagramas; track d.id) {
+    <article class="tarjeta diagrama">
+      <h3>{{ d.titulo }}</h3>
+      <p>{{ d.explicacion }}</p>
+      <div class="archivos">
+        @for (a of d.archivos; track a) {
+          <code>{{ a }}</code>
+        }
+      </div>
+      <div class="lienzo" #lienzo></div>
+    </article>
+  }
+</section>
